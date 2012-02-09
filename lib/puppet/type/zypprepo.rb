@@ -251,80 +251,6 @@ module Puppet
       newvalue(/.*/) { }
     end
 
-    newproperty(:include, :parent => Puppet::IniProperty) do
-      desc "The URL of a remote file containing additional zypper configuration
-        settings. Puppet does not check for this file's existence or validity.
-        #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      # Should really check that it's a valid URL
-      newvalue(/.*/) { }
-    end
-
-    newproperty(:exclude, :parent => Puppet::IniProperty) do
-      desc "List of shell globs. Matching packages will never be
-        considered in updates or installs for this repo.
-        #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(/.*/) { }
-    end
-
-    newproperty(:includepkgs, :parent => Puppet::IniProperty) do
-      desc "List of shell globs. If this is set, only packages
-        matching one of the globs will be considered for
-        update or install from this repo. #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(/.*/) { }
-    end
-
-    newproperty(:enablegroups, :parent => Puppet::IniProperty) do
-      desc "Whether zypper will allow the use of package groups for this
-        repository, as represented by a `0` or `1`. #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(%r{(0|1)}) { }
-    end
-
-    newproperty(:failovermethod, :parent => Puppet::IniProperty) do
-      desc "The failover methode for this repository; should be either
-        `roundrobin` or `priority`. #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(%r{roundrobin|priority}) { }
-    end
-
-    newproperty(:keepalive, :parent => Puppet::IniProperty) do
-      desc "Whether HTTP/1.1 keepalive should be used with this repository, as
-        represented by a `0` or `1`. #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(%r{(0|1)}) { }
-    end
-
-     newproperty(:http_caching, :parent => Puppet::IniProperty) do
-       desc "What to cache from this repository. #{ABSENT_DOC}"
-       newvalue(:absent) { self.should = :absent }
-       newvalue(%r(packages|all|none)) { }
-     end
-
-    newproperty(:timeout, :parent => Puppet::IniProperty) do
-      desc "Number of seconds to wait for a connection before timing
-        out. #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(%r{[0-9]+}) { }
-    end
-
-    newproperty(:metadata_expire, :parent => Puppet::IniProperty) do
-      desc "Number of seconds after which the metadata will expire.
-        #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(%r{[0-9]+}) { }
-    end
-
-    newproperty(:protect, :parent => Puppet::IniProperty) do
-      desc "Enable or disable protection for this repository. Requires
-        that the `protectbase` plugin is installed and enabled.
-        #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(%r{(0|1)}) { }
-    end
-
     newproperty(:priority, :parent => Puppet::IniProperty) do
       desc "Priority of this repository from 1-99. Requires that
         the `priorities` plugin is installed and enabled.
@@ -333,36 +259,19 @@ module Puppet
       newvalue(%r{[1-9][0-9]?}) { }
     end
 
-    newproperty(:cost, :parent => Puppet::IniProperty) do
-      desc "Cost of this repository.\n#{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(%r{\d+}) { }
-    end
-
-    newproperty(:proxy, :parent => Puppet::IniProperty) do
-      desc "URL to the proxy server for this repository. #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      # Should really check that it's a valid URL
-      newvalue(/.*/) { }
-    end
-
-    newproperty(:proxy_username, :parent => Puppet::IniProperty) do
-      desc "Username for this proxy. #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(/.*/) { }
-    end
-
-    newproperty(:proxy_password, :parent => Puppet::IniProperty) do
-      desc "Password for this proxy. #{ABSENT_DOC}"
-      newvalue(:absent) { self.should = :absent }
-      newvalue(/.*/) { }
-    end
-
     newproperty(:autorefresh, :parent => Puppet::IniProperty) do
       desc "Enable autorefresh of the repository., as represented by a
         `0` or `1`. #{ABSENT_DOC}"
       newvalue(:absent) { self.should = :absent }
       newvalue(%r{(0|1)}) { }
     end
+
+    newproperty(:keeppackages, :parent => Puppet::IniProperty) do
+      desc "Enable RPM files caching., as represented by a
+        `0` or `1`. #{ABSENT_DOC}"
+      newvalue(:absent) { self.should = :absent }
+      newvalue(%r{(0|1)}) { }
+    end
+
   end
 end
