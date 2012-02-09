@@ -217,7 +217,6 @@ module Puppet
       desc "The URL that holds the list of mirrors for this repository.
         #{ABSENT_DOC}"
       newvalue(:absent) { self.should = :absent }
-      # Should really check that it's a valid URL
       newvalue(/.*/) { }
     end
 
@@ -225,6 +224,12 @@ module Puppet
       desc "The URL for this repository. #{ABSENT_DOC}"
       newvalue(:absent) { self.should = :absent }
       # Should really check that it's a valid URL
+      newvalue(/.*/) { }
+    end
+
+    newproperty(:path, :parent => Puppet::IniProperty) do
+      desc "The path relative to the baseurl. #{ABSENT_DOC}"
+      newvalue(:absent) { self.should = :absent }
       newvalue(/.*/) { }
     end
 
@@ -252,25 +257,30 @@ module Puppet
     end
 
     newproperty(:priority, :parent => Puppet::IniProperty) do
-      desc "Priority of this repository from 1-99. Requires that
-        the `priorities` plugin is installed and enabled.
-        #{ABSENT_DOC}"
+      desc "Priority of this repository from 1-99. #{ABSENT_DOC}"
       newvalue(:absent) { self.should = :absent }
       newvalue(%r{[1-9][0-9]?}) { }
     end
 
     newproperty(:autorefresh, :parent => Puppet::IniProperty) do
-      desc "Enable autorefresh of the repository., as represented by a
+      desc "Enable autorefresh of the repository, as represented by a
         `0` or `1`. #{ABSENT_DOC}"
       newvalue(:absent) { self.should = :absent }
       newvalue(%r{(0|1)}) { }
     end
 
     newproperty(:keeppackages, :parent => Puppet::IniProperty) do
-      desc "Enable RPM files caching., as represented by a
+      desc "Enable RPM files caching, as represented by a
         `0` or `1`. #{ABSENT_DOC}"
       newvalue(:absent) { self.should = :absent }
       newvalue(%r{(0|1)}) { }
+    end
+
+    newproperty(:type, :parent => Puppet::IniProperty) do
+      desc "The type of software repository. Values can match
+         `yast2` or `rpm-md` or `plaindir`. #{ABSENT_DOC}"
+      newvalue(:absent) { self.should = :absent }
+      newvalue(%r{yast2|rpm-md|plaindir}) { }
     end
 
   end
