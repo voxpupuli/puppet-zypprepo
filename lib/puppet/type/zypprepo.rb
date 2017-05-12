@@ -171,7 +171,7 @@ module Puppet
       inifile.each_file do |file|
         current_mode = File.stat(file).mode & 0o777
         unless current_mode == target_mode
-          Puppet.info "changing mode of #{file} from %03o to %03o" % [current_mode, target_mode]
+          Puppet.info "changing mode of #{file} from %03o to %03o" % [current_mode, target_mode] # rubocop:disable Style/FormatString
           File.chmod(target_mode, file)
         end
       end
