@@ -26,4 +26,4 @@ zypprepo { 'openSUSE_12.1':
 ```
 
 This Puppet 'type' is a port of the 'yumrepo' type from 2.7 code base
-and is licensed under the ASL 2.0.
+and is licensed under the Apache-2.0.
