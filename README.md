@@ -1,3 +1,13 @@
+# puppet-zypprepo
+
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-zypprepo.svg?branch=master)](https://travis-ci.org/voxpupuli/puppet-zypprepo)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/zypprepo.svg)](https://forge.puppetlabs.com/puppet/zypprepo)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/zypprepo.svg)](https://forge.puppetlabs.com/puppet/zypprepo)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/zypprepo.svg)](https://forge.puppetlabs.com/puppet/zypprepo)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/zypprepo.svg)](https://forge.puppetlabs.com/puppet/zypprepo)
+
+## Overview
+
 'zypprepo' - The client-side description of a zypper repository.
 
 Usage:
