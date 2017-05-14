@@ -1,5 +1,6 @@
 # puppet-zypprepo
 
+[![License](https://img.shields.io/github/license/voxpupuli/puppet-zypprepo.svg)](https://github.com/voxpupuli/puppet-zypprepo/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/voxpupuli/puppet-zypprepo.svg?branch=master)](https://travis-ci.org/voxpupuli/puppet-zypprepo)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/zypprepo.svg)](https://forge.puppetlabs.com/puppet/zypprepo)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/zypprepo.svg)](https://forge.puppetlabs.com/puppet/zypprepo)
@@ -10,7 +11,7 @@
 
 'zypprepo' - The client-side description of a zypper repository.
 
-Usage:
+## Usage
 
 ```puppet
 zypprepo { 'openSUSE_12.1':
