@@ -4,7 +4,24 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.2.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v2.2.0) (2017-11-02)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v2.1.0...v2.2.0)
+
+**Implemented enhancements:**
+
+- NONE is a valid value for Zypp repositories [\#24](https://github.com/voxpupuli/puppet-zypprepo/pull/24) ([laserguy2020](https://github.com/laserguy2020))
+
+**Closed issues:**
+
+- Remove PaxHeaders from distributed package [\#11](https://github.com/voxpupuli/puppet-zypprepo/issues/11)
+
+**Merged pull requests:**
+
+- Release 2.1.0 [\#23](https://github.com/voxpupuli/puppet-zypprepo/pull/23) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v2.1.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v2.1.0) (2017-10-14)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v2.0.0...v2.1.0)
 
 **Closed issues:**
@@ -17,17 +34,21 @@ These should not affect the functionality of the module.
 
 - Add LICENSE file and badge [\#19](https://github.com/voxpupuli/puppet-zypprepo/pull/19) ([alexjfisher](https://github.com/alexjfisher))
 - Remove Modulefile [\#18](https://github.com/voxpupuli/puppet-zypprepo/pull/18) ([alexjfisher](https://github.com/alexjfisher))
+- release 2.0.0 [\#17](https://github.com/voxpupuli/puppet-zypprepo/pull/17) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v2.0.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v2.0.0) (2017-05-13)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v1.0.2...v2.0.0)
 
 **Merged pull requests:**
 
-- release 2.0.0 [\#17](https://github.com/voxpupuli/puppet-zypprepo/pull/17) ([bastelfreak](https://github.com/bastelfreak))
 - Remove newtype warning in Puppet 4.8 [\#13](https://github.com/voxpupuli/puppet-zypprepo/pull/13) ([egoexpress](https://github.com/egoexpress))
 - update metadata.json [\#7](https://github.com/voxpupuli/puppet-zypprepo/pull/7) ([mmoll](https://github.com/mmoll))
 
 ## [v1.0.2](https://github.com/voxpupuli/puppet-zypprepo/tree/v1.0.2) (2015-01-21)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/79c943bba65ffc7e45208923becd90d14a653013...v1.0.2)
+
 **Closed issues:**
 
 - Update metadata.json [\#6](https://github.com/voxpupuli/puppet-zypprepo/issues/6)
