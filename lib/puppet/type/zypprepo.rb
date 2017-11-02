@@ -274,9 +274,9 @@ module Puppet
 
     newproperty(:type, parent: Puppet::IniProperty) do
       desc "The type of software repository. Values can match
-         `yast2` or `rpm-md` or `plaindir` or `yum`. #{ABSENT_DOC}"
+         `yast2` or `rpm-md` or `plaindir` or `yum` or `NONE`. #{ABSENT_DOC}"
       newvalue(:absent) { self.should = :absent }
-      newvalue(%r{yast2|rpm-md|plaindir|yum}) {}
+      newvalue(%r{yast2|rpm-md|plaindir|yum|NONE}) {}
     end
   end
 end
