@@ -1,6 +1,6 @@
 {
   "name": "puppet-zypprepo",
-  "version": "2.2.2-rc0",
+  "version": "2.2.2",
   "source": "https://github.com/voxpupuli/puppet-zypprepo.git",
   "author": "Vox Pupuli",
   "license": "Apache-2.0",
