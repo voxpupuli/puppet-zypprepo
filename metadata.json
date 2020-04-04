@@ -8,7 +8,16 @@
   "description": "zypprepo is a client-side description or type of a zypper repository for OpenSUSE/SuSE systems.",
   "project_page": "https://github.com/voxpupuli/puppet-zypprepo",
   "issues_url": "https://github.com/voxpupuli/puppet-zypprepo/issues",
-  "dependencies": [],
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.18.0 < 7.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 1.2.5 < 7.0.0"
+    }
+  ],
   "requirements": [
     {
       "name": "puppet",
