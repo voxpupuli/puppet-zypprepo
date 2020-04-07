@@ -4,7 +4,23 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v2.2.2](https://github.com/voxpupuli/puppet-zypprepo/tree/v2.2.2) (2018-10-13)
+## [v3.0.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v3.0.0) (2020-04-07)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v2.2.2...v3.0.0)
+
+**Breaking changes:**
+
+- modulesync 2.7.0 and drop puppet 4 [\#40](https://github.com/voxpupuli/puppet-zypprepo/pull/40) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add versionlock support [\#44](https://github.com/voxpupuli/puppet-zypprepo/pull/44) ([msurato](https://github.com/msurato))
+
+**Merged pull requests:**
+
+- Add support for SLES 15 [\#46](https://github.com/voxpupuli/puppet-zypprepo/pull/46) ([msurato](https://github.com/msurato))
+
+## [v2.2.2](https://github.com/voxpupuli/puppet-zypprepo/tree/v2.2.2) (2018-10-14)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v2.2.1...v2.2.2)
 
