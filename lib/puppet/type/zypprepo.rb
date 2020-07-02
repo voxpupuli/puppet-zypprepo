@@ -237,6 +237,22 @@ module Puppet
     end
 
     newproperty(:gpgcheck, parent: Puppet::IniProperty) do
+      desc "Whether to check the GPG signatures
+        from this repository, as represented by a `0` or `1`.
+        #{ABSENT_DOC}"
+      newvalue(:absent) { self.should = :absent }
+      newvalue(%r{(0|1)}) {}
+    end
+
+    newproperty(:repo_gpgcheck, parent: Puppet::IniProperty) do
+      desc "Whether to check the GPG signature on the repository
+         metadata, as represented by a `0` or `1`.
+        #{ABSENT_DOC}"
+      newvalue(:absent) { self.should = :absent }
+      newvalue(%r{(0|1)}) {}
+    end
+
+    newproperty(:pkg_gpgcheck, parent: Puppet::IniProperty) do
       desc "Whether to check the GPG signature on packages installed
         from this repository, as represented by a `0` or `1`.
         #{ABSENT_DOC}"
