@@ -13,8 +13,11 @@
 
 ## Usage
 
+**Version 3.1.0 introduced a rewrite of the zypprepo type and added a full functional provider based on `puppetlabs-yumrepo_core`. The type is now ensurable. To keep previous behavior, it defaults to present, which makes the ensure parameter optional**
+
 ```puppet
 zypprepo { 'openSUSE_12.1':
+  ensure        => present,
   baseurl       => 'http://download.opensuse.org/distribution/12.1/repo/oss/suse/',
   enabled       => 1,
   autorefresh   => 1,
