@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.1.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v3.1.0) (2020-12-12)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v3.0.0...v3.1.0)
+
+**Implemented enhancements:**
+
+- Migrate zypprepo from type only to type and provider [\#52](https://github.com/voxpupuli/puppet-zypprepo/pull/52) ([tuxmea](https://github.com/tuxmea))
+- Add repo\_gpgcheck and pkg\_gpgcheck options [\#48](https://github.com/voxpupuli/puppet-zypprepo/pull/48) ([mx-psi](https://github.com/mx-psi))
+
+**Closed issues:**
+
+- Option to remove all repositories that are not managed by puppet [\#9](https://github.com/voxpupuli/puppet-zypprepo/issues/9)
+- Ability to remove repo [\#5](https://github.com/voxpupuli/puppet-zypprepo/issues/5)
+
 ## [v3.0.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v3.0.0) (2020-04-07)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v2.2.2...v3.0.0)
