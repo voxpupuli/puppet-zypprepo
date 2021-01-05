@@ -23,7 +23,7 @@ zypprepo { 'openSUSE_12.1':
   autorefresh   => 1,
   name          => 'openSUSE_12.1',
   gpgcheck      => 1,
-  repo_gpgcheck => 0,
+  repo_gpgcheck => 1,
   pkg_gpgcheck  => 1,
   priority      => 98,
   keeppackages  => 1,
