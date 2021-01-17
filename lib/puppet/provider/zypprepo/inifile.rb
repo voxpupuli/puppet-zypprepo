@@ -8,15 +8,15 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
 
     ### Fetching instances
     When fetching repo instances, directory entries in '/etc/zypp/repos.d',
-    and the directory optionally specified by the reposdir key in '/etc/zypp/zypper.conf'
+    and the directory optionally specified by the reposdir key in '/etc/zypp/zypp.conf'
     will be checked. If a given directory does not exist it will be ignored.
-    In addition, all sections in '/etc/zypp/zypper.conf' aside from
+    In addition, all sections in '/etc/zypp/zypp.conf' aside from
     'main' will be created as sections.
 
     ### Storing instances
     When creating a new repository, a new section will be added in the first
     zypper repo directory that exists. The custom directory specified by the
-    '/etc/zypp/zypper.conf' reposdir property is checked first, followed by
+    '/etc/zypp/zypp.conf' reposdir property is checked first, followed by
     '/etc/zypp/repos.d'.
   EOD
 
@@ -31,7 +31,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
     instances = []
 
     virtual_inifile.each_section do |section|
-      # Ignore the 'main' section in zypper.conf since it's not a repository.
+      # Ignore the 'main' section in zypp.conf since it's not a repository.
       next if section.name == 'main'
 
       attributes_hash = { name: section.name, ensure: :present, provider: :zypprepo }
@@ -71,11 +71,12 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   # @param conf [String] Configuration file to look for directories in.
   # @param dirs [Array<String>] Default locations for zypper repos.
   # @return [Array<String>] All present directories that may contain zypper repo configs.
-  def self.reposdir(conf = '/etc/zypp/zypper.conf', dirs = ['/etc/zypp/repos.d'])
+  def self.reposdir(conf = '/etc/zypp/zypp.conf', dirs = ['/etc/zypp/repos.d'])
     reposdir = find_conf_value('reposdir', conf)
     # Use directories in reposdir if they are set instead of default
     if reposdir
       # Follow the code from the yumrepo provider
+      reposdir.strip!
       reposdir.tr!("\n", ' ')
       reposdir.tr!(',', ' ')
       dirs = reposdir.split
@@ -100,7 +101,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   # @param value [String] Value to look for in the configuration file.
   # @param conf [String] Configuration file to check for value.
   # @return [String] The value of a looked up key from the configuration file.
-  def self.find_conf_value(value, conf = '/etc/zypp/zypper.conf')
+  def self.find_conf_value(value, conf = '/etc/zypp/zypp.conf')
     return unless Puppet::FileSystem.exist?(conf)
 
     file = Puppet::Util::IniConfig::PhysicalFile.new(conf)
@@ -112,7 +113,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   # Enumerate all files that may contain zypper repository configs.
   #
   # @api private
-  # @return [Array<String>
+  # @return [Array<String>]
   def self.repofiles
     files = []
     reposdir.each do |dir|
