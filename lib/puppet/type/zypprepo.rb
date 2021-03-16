@@ -70,8 +70,7 @@ Puppet::Type.newtype(:zypprepo) do
 
   newproperty(:path) do
     desc "The path relative to the baseurl. #{ABSENT_DOC}"
-    newvalue(:absent) { self.should = :absent }
-    newvalue(%r{.*}) {}
+    newvalues(%r{.*}, :absent)
   end
 
   newproperty(:enabled) do
