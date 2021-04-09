@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.0.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v4.0.0) (2021-04-09)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v3.1.0...v4.0.0)
+
+**Breaking changes:**
+
+- Drop EoL Puppet 5 support / Add Puppet 7 support [\#62](https://github.com/voxpupuli/puppet-zypprepo/pull/62) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- puppetlabs/concat and puppetlabs/stdlib: Allow version 7 [\#61](https://github.com/voxpupuli/puppet-zypprepo/pull/61) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- Fix the value declaration of type [\#60](https://github.com/voxpupuli/puppet-zypprepo/pull/60) ([dadav](https://github.com/dadav))
+
+**Closed issues:**
+
+- Repo doesnt actually gets enabled [\#59](https://github.com/voxpupuli/puppet-zypprepo/issues/59)
+- Unable to manage path property [\#57](https://github.com/voxpupuli/puppet-zypprepo/issues/57)
+- PDK and add tests [\#53](https://github.com/voxpupuli/puppet-zypprepo/issues/53)
+- Errors when another zypper is running [\#12](https://github.com/voxpupuli/puppet-zypprepo/issues/12)
+
+**Merged pull requests:**
+
+- Allow changing of path property [\#58](https://github.com/voxpupuli/puppet-zypprepo/pull/58) ([tuxmea](https://github.com/tuxmea))
+- Add unit tests for zypprepo type/provider [\#55](https://github.com/voxpupuli/puppet-zypprepo/pull/55) ([tuxmea](https://github.com/tuxmea))
+
 ## [v3.1.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v3.1.0) (2020-12-12)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v3.0.0...v3.1.0)
