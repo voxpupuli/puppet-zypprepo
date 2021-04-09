@@ -20,44 +20,44 @@ shared_examples_for 'a zypprepo parameter that can be an integer' do |param|
     expect(instance[param]).to eq '0'
   end
   it 'rejects invalid positive float' do
-    expect {
+    expect do
       described_class.new(
         :name => 'puppetlabs',
-        param => '12.5',
+        param => '12.5'
       )
-    }.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
+    end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
   it 'rejects invalid non-integer' do
-    expect {
+    expect do
       described_class.new(
         :name => 'puppetlabs',
-        param => 'I\'m a six',
+        param => 'I\'m a six'
       )
-    }.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
+    end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
   it 'rejects invalid string with integers inside' do
-    expect {
+    expect do
       described_class.new(
         :name => 'puppetlabs',
-        param => 'I\'m a 6',
+        param => 'I\'m a 6'
       )
-    }.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
+    end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
 end
 
 shared_examples_for "a zypprepo parameter that can't be a negative integer" do |param|
   it 'rejects invalid negative integer' do
-    expect {
+    expect do
       described_class.new(
         :name => 'puppetlabs',
-        param => '-12',
+        param => '-12'
       )
-    }.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
+    end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
 end
 
 shared_examples_for 'a zypprepo parameter that expects a boolean parameter' do |param|
-  valid_values = ['true', 'false', '0', '1', 'no', 'yes']
+  valid_values = %w[true false 0 1 no yes]
 
   valid_values.each do |value|
     it "accepts #{value} downcased to #{value.downcase} and capitalizes it" do
@@ -65,19 +65,19 @@ shared_examples_for 'a zypprepo parameter that expects a boolean parameter' do |
       expect(instance[param]).to eq value.downcase.capitalize
     end
     it "fails on valid value #{value} contained in another value" do
-      expect {
+      expect do
         described_class.new(
           :name => 'puppetlabs',
-          param => "bla#{value}bla",
+          param => "bla#{value}bla"
         )
-      }.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
+      end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
     end
   end
 
   it 'rejects invalid boolean values' do
-    expect {
+    expect do
       described_class.new(:name => 'puppetlabs', param => 'flase')
-    }.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
+    end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
 end
 
@@ -85,26 +85,26 @@ shared_examples_for 'a zypprepo parameter that accepts a single URL' do |param|
   it 'can accept a single URL' do
     described_class.new(
       :name => 'puppetlabs',
-      param => 'http://localhost/zypprepos',
+      param => 'http://localhost/zypprepos'
     )
   end
 
   it 'fails if an invalid URL is provided' do
-    expect {
+    expect do
       described_class.new(
         :name => 'puppetlabs',
-        param => "that's no URL!",
+        param => "that's no URL!"
       )
-    }.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
+    end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
 
   it 'fails if a valid URL uses an invalid URI scheme' do
-    expect {
+    expect do
       described_class.new(
         :name => 'puppetlabs',
-        param => 'ldap://localhost/zypprepos',
+        param => 'ldap://localhost/zypprepos'
       )
-    }.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
+    end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
 end
 
@@ -112,37 +112,37 @@ shared_examples_for 'a zypprepo parameter that accepts multiple URLs' do |param|
   it 'can accept multiple URLs' do
     described_class.new(
       :name => 'puppetlabs',
-      param => 'http://localhost/zypprepos http://localhost/more-zypprepos',
+      param => 'http://localhost/zypprepos http://localhost/more-zypprepos'
     )
   end
 
   it 'fails if multiple URLs are given and one is invalid' do
-    expect {
+    expect do
       described_class.new(
         :name => 'puppetlabs',
-        param => "http://localhost/zypprepos That's no URL!",
+        param => "http://localhost/zypprepos That's no URL!"
       )
-    }.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
+    end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
 end
 
 shared_examples_for 'a zypprepo parameter that accepts kMG units' do |param|
-  ['k', 'M', 'G'].each do |unit|
+  %w[k M G].each do |unit|
     it "can accept an integer with #{unit} units" do
       described_class.new(
         :name => 'puppetlabs',
-        param => "123#{unit}",
+        param => "123#{unit}"
       )
     end
   end
 
   it 'fails if wrong unit passed' do
-    expect {
+    expect do
       described_class.new(
         :name => 'puppetlabs',
-        param => '123J',
+        param => '123J'
       )
-    }.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
+    end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
 end
 
@@ -189,7 +189,5 @@ describe Puppet::Type.type(:zypprepo) do
       it_behaves_like 'a zypprepo parameter that can be absent', :priority
       it_behaves_like 'a zypprepo parameter that can be an integer', :priority
     end
-
   end
 end
-

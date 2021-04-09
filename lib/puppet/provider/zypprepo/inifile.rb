@@ -1,7 +1,6 @@
 # Description of zypper repositories
 require 'puppet/util/inifile'
 
-
 Puppet::Type.type(:zypprepo).provide(:inifile) do
   desc <<-EOD
     Manage zypper repo configurations by parsing zypper INI configuration files.
@@ -59,12 +58,9 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
     repos = instances
     resources.each_key do |name|
       provider = repos.find { |repo| repo.name == name }
-      if provider
-        resources[name].provider = provider
-      end
+      resources[name].provider = provider if provider
     end
   end
-
 
   #
   # @api private
@@ -180,8 +176,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
       next unless Puppet::FileSystem.exist?(file)
       current_mode = Puppet::FileSystem.stat(file).mode & 0o777
       next if current_mode == target_mode
-      resource.info _('changing mode of %{file} from %{current_mode} to %{target_mode}') %
-                    { file: file, current_mode: '%03o' % current_mode, target_mode: '%03o' % target_mode }
+      resource.info format(_('changing mode of %{file} from %{current_mode} to %{target_mode}'), file: file, current_mode: format('%03o', current_mode), target_mode: format('%03o', target_mode))
       Puppet::FileSystem.chmod(target_mode, file)
     end
   end
@@ -280,7 +275,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   end
 
   def descr=(value)
-    value = ((value == :absent) ? nil : value)
+    value = (value == :absent ? nil : value)
     current_section['name'] = value
     @property_hash[:descr] = value
   end
@@ -296,7 +291,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   end
 
   def set_property(property, value)
-    value = ((value == :absent) ? nil : value)
+    value = (value == :absent ? nil : value)
     current_section[property.to_s] = value
     @property_hash[property] = value
   end
@@ -308,5 +303,4 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   def current_section
     self.class.section(name)
   end
-
 end

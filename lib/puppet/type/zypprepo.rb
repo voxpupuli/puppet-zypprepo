@@ -21,10 +21,10 @@ Puppet::Type.newtype(:zypprepo) do
   ZYPP_BOOLEAN_DOC = 'Valid values are: false/0/no or true/1/yes.'.freeze
 
   munge_zypp_bool = proc do |val|
-    (val.to_s == 'absent') ? :absent : val.to_s.capitalize
+    val.to_s == 'absent' ? :absent : val.to_s.capitalize
   end
 
-  VALID_SCHEMES = ['file', 'http', 'https', 'ftp', 'cd'].freeze
+  VALID_SCHEMES = %w[file http https ftp cd].freeze
 
   newparam(:name, namevar: true) do
     desc "The name of the repository.  This corresponds to the
