@@ -52,11 +52,11 @@ module PuppetSpec::Files
   end
 
   def expect_file_mode(file, mode)
-    actual_mode = '%o' % Puppet::FileSystem.stat(file).mode
+    actual_mode = format('%o', Puppet::FileSystem.stat(file).mode)
     target_mode = if Puppet.features.microsoft_windows?
                     mode
                   else
-                    '10' + '%04i' % mode.to_i
+                    '10' + format('%04i', mode.to_i)
                   end
     expect(actual_mode).to eq(target_mode)
   end

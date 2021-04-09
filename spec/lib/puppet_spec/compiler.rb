@@ -4,7 +4,7 @@ module PuppetSpec::Compiler
   def compile_to_catalog(string, node = Puppet::Node.new('test'))
     Puppet[:code] = string
     # see lib/puppet/indirector/catalog/compiler.rb#filter
-    Puppet::Parser::Compiler.compile(node).filter { |r| r.virtual? }
+    Puppet::Parser::Compiler.compile(node).filter(&:virtual?)
   end
 
   def compile_to_ral(manifest, node = Puppet::Node.new('test'))
@@ -23,9 +23,7 @@ module PuppetSpec::Compiler
       # rubocop:enable RSpec/AnyInstance
     end
     catalog = compile_to_ral(manifest)
-    if block_given?
-      catalog.resources.each { |res| yield res }
-    end
+    catalog.resources.each { |res| yield res } if block_given?
     transaction = Puppet::Transaction.new(catalog,
                                           Puppet::Transaction::Report.new(*args),
                                           prioritizer)

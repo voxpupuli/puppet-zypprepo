@@ -9,12 +9,12 @@ end
 require 'spec_helper'
 require 'puppet_spec/compiler'
 require 'puppet_spec/files'
-
+# rubocop:disable RSpec/MessageSpies
 describe Puppet::Type.type(:zypprepo).provider(:inifile) do
   include PuppetSpec::Files
   include PuppetSpec::Compiler
 
-  after(:each) do
+  after do
     described_class.clear
   end
 
@@ -28,18 +28,17 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
       expect(actual).to include('/etc/zypp/repos.d/first.repo')
       expect(actual).to include('/etc/zypp/repos.d/second.repo')
     end
-
   end
 
   describe 'generating the virtual inifile' do
     let(:files) { ['/etc/zypp/repos.d/first.repo', '/etc/zypp/repos.d/second.repo'] }
+    # rubocop:disable RSpec/VerifiedDoubles
     let(:collection) { double('virtual inifile') }
 
-    before(:each) do
+    before do
       described_class.clear
-      expect(Puppet::Util::IniConfig::FileCollection).to receive(:new).and_return collection
+      expect(Puppet::Util::IniConfig::FileCollection).to receive(:new).and_return collection # rubocop:disable RSpec/ExpectInHook
     end
-
     it 'reads all files in the directories specified by self.repofiles' do
       expect(described_class).to receive(:repofiles).and_return(files)
 
@@ -68,7 +67,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
     let(:main_section) do
       sect = Puppet::Util::IniConfig::Section.new('main', '/some/imaginary/file')
       sect.entries << ['distroverpkg', 'sles-release']
-      sect.entries << ['plugins', '1']
+      sect.entries << %w[plugins 1]
 
       sect
     end
@@ -76,12 +75,12 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
     let(:updates_section) do
       sect = Puppet::Util::IniConfig::Section.new('updates', '/some/imaginary/file')
       sect.entries << ['name', 'Some long description of the repo']
-      sect.entries << ['enabled', '1']
+      sect.entries << %w[enabled 1]
 
       sect
     end
 
-    before :each do
+    before do
       allow(described_class).to receive(:virtual_inifile).and_return(virtual_inifile)
     end
 
@@ -108,12 +107,12 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
 
     let(:ini_section) { double('ini file section') }
 
-    before(:each) do
+    before do
       allow(described_class).to receive(:virtual_inifile).and_return(collection)
     end
 
     describe 'and the requested section exists' do
-      before(:each) do
+      before do
         allow(collection).to receive(:[]).with('updates').and_return ini_section
       end
 
@@ -147,7 +146,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
         descr: 'Puppet Labs Products SLES 12 - $basearch',
         enabled: '1',
         gpgcheck: '1',
-        gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs',
+        gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
       )
     end
 
@@ -159,7 +158,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
       double('inifile puppetlabs section', name: 'puppetlabs-products')
     end
 
-    before(:each) do
+    before do
       type_instance.provider = provider
       allow(described_class).to receive(:section).with('puppetlabs-products').and_return(section)
     end
@@ -216,7 +215,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
   describe 'reposdir' do
     let(:defaults) { ['/etc/zypp/repos.d'] }
 
-    before(:each) do
+    before do
       allow(Puppet::FileSystem).to receive(:exist?).with('/etc/zypp/repos.d').and_return(true)
     end
 
@@ -277,10 +276,10 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
       let(:pfile) { double('zypp.conf physical file') }
       let(:sect) { double('ini section') }
 
-      before(:each) do
+      before do
         allow(Puppet::FileSystem).to receive(:exist?).with('/etc/zypp/zypp.conf').and_return true
         allow(Puppet::Util::IniConfig::PhysicalFile).to receive(:new).with('/etc/zypp/zypp.conf').and_return pfile
-        expect(pfile).to receive(:read)
+        expect(pfile).to receive(:read) # rubocop:disable RSpec/ExpectInHook
       end
 
       it 'creates a PhysicalFile to parse the given file' do
@@ -316,7 +315,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
         descr: 'Puppet Labs Products SLES 12 - $basearch',
         enabled: '1',
         gpgcheck: '1',
-        gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs',
+        gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
       )
     end
 
@@ -327,7 +326,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
     let(:zypprepo_dir) { tmpdir('zypprepo_integration_specs') }
     let(:zypprepo_conf_file) { tmpfile('zypprepo_conf_file', zypprepo_dir) }
 
-    before :each do
+    before do
       allow(described_class).to receive(:reposdir).and_return [zypprepo_dir]
       type_instance.provider = provider
     end
@@ -396,6 +395,6 @@ gpgcheck=0
       provider.flush
     end
   end
-
 end
-
+# rubocop:enable RSpec/MessageSpies
+# rubocop:enaable RSpec/VerifiedDoubles
