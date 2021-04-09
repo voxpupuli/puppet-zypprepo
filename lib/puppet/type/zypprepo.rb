@@ -151,7 +151,6 @@ Puppet::Type.newtype(:zypprepo) do
   newproperty(:type) do
     desc "The type of software repository. Values can match
        `yast2` or `rpm-md` or `plaindir` or `yum` or `NONE`. #{ABSENT_DOC}"
-    newvalue(:absent) { self.should = :absent }
-    newvalue(%r{yast2|rpm-md|plaindir|yum|NONE}) {}
+    newvalues(%r{yast2|rpm-md|plaindir|yum|NONE}, :absent)
   end
 end
