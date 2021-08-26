@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.0.1](https://github.com/voxpupuli/puppet-zypprepo/tree/v4.0.1) (2021-08-26)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v4.0.0...v4.0.1)
+
+**Merged pull requests:**
+
+- Allow stdlib 8.0.0 [\#65](https://github.com/voxpupuli/puppet-zypprepo/pull/65) ([smortex](https://github.com/smortex))
+
 ## [v4.0.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v4.0.0) (2021-04-09)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v3.1.0...v4.0.0)
