@@ -12,12 +12,23 @@
 #   Wildcards may be used within token slots, but must not cover seperators,
 #   e.g., 'b*sh-4.1.2-9.*' covers Bash version 4.1.2, revision 9 on all
 #   architectures.
+#   On Suse systems below version 15 the resource title may only consist of the package name.
 #
 define zypprepo::versionlock {
   require zypprepo::plugin::versionlock
 
-  assert_type(Zypprepo::VersionlockString, $name) |$_expected, $actual | {
-    fail("Package name must be formatted as %{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}, not \'${actual}\'. See Zypprepo::Versionlock documentation for details.")
+  # Versionlock on SLES12 is different
+  case $facts['os']['release']['major'] {
+    '15': {
+      assert_type(Zypprepo::VersionlockString, $name) |$_expected, $actual | {
+        fail("Package name must be formatted as %{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}, not \'${actual}\'. See Zypprepo::Versionlock documentation for details.")
+      }
+    }
+    default: {
+      assert_type(String[1], $name) |$_expected, $actual| {
+        fail("Package must be formatted as %{NAME}, not \'${actual}\'. See Zypprepo::Versionlock documentation for details.")
+      }
+    }
   }
 
   concat::fragment { "zypprepo-versionlock-${name}":
