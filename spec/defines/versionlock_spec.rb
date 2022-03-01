@@ -85,31 +85,32 @@ describe 'zypprepo::versionlock' do
           )
         end
       end
+    end
+  end
 
-      context 'on Suse 15' do
-        test_on = {
-          :hardwaremodels => ['x86_64'],
-          :supported_os   => [
-            {
-              'operatingsystem' => 'Suse',
-              'operatingsystemrelease' => ['15'],
-            },
-          ],
-        }
-        on_supported_os(test_on).each do |os, os_facts|
-          let (:facts) { os_facts }
-          context 'with an invalid title' do
-            let(:title) { titles['invalid'] }
+  context 'on Suse 15' do
+    test_on = {
+      hardwaremodels: ['x86_64'],
+      supported_os: [
+        {
+          'operatingsystem' => 'Suse',
+          'operatingsystemrelease' => ['15'],
+        },
+      ],
+    }
+    on_supported_os(test_on).each do |_os, os_facts|
+      let(:facts) { os_facts }
 
-            it { is_expected.to raise_error(Puppet::PreformattedError, %r(%\{NAME\}-%\{VERSION\}-%\{RELEASE\}\.%\{ARCH\})) }
+      context 'with an invalid title' do
+        let(:title) { titles['invalid'] }
+
+        it { is_expected.to raise_error(Puppet::PreformattedError, %r(%\{NAME\}-%\{VERSION\}-%\{RELEASE\}\.%\{ARCH\})) }
       end
 
-          context 'with an invalid wildcard pattern' do
-            let(:title) { titles['invalid_wildcard'] }
+      context 'with an invalid wildcard pattern' do
+        let(:title) { titles['invalid_wildcard'] }
 
-            it { is_expected.to raise_error(Puppet::PreformattedError, %r(%\{NAME\}-%\{VERSION\}-%\{RELEASE\}\.%\{ARCH\})) }
-          end
-        end
+        it { is_expected.to raise_error(Puppet::PreformattedError, %r(%\{NAME\}-%\{VERSION\}-%\{RELEASE\}\.%\{ARCH\})) }
       end
     end
   end
