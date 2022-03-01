@@ -7,26 +7,26 @@ end
 
 describe 'zypprepo::versionlock' do
   on_supported_os.each do |os, os_facts|
-    case os_facts[:os]['release']['major']
-    when '15'
-      titles = {
-        'well_formatted' => 'bash-4.4-9.10.1.x86_64',
-        'trailing_wildcard' => 'bash-4.4-9.10.1.*',
-        'complex_wildcard' => 'bash-4.*-*.1',
-        'release_containing_dots' => 'java-1.7.0-openjdk-1.7.0.121-2.6.8.0.3.x86_64',
-        'invalid' => 'bash-4.4.1',
-        'invalid_wildcard' => 'bash-4.4.9*',
-      }
-    else
-      titles = {
-        'well_formatted' => 'bash',
-        'trailing_wildcard' => 'bash',
-        'complex_wildcard' => 'bash',
-        'release_containing_dots' => 'bash',
-        'invalid' => 22,
-        'invalid_wildcard' => 22,
-      }
-    end
+    titles = case os_facts[:os]['release']['major']
+             when '15'
+               {
+                 'well_formatted' => 'bash-4.4-9.10.1.x86_64',
+                 'trailing_wildcard' => 'bash-4.4-9.10.1.*',
+                 'complex_wildcard' => 'bash-4.*-*.1',
+                 'release_containing_dots' => 'java-1.7.0-openjdk-1.7.0.121-2.6.8.0.3.x86_64',
+                 'invalid' => 'bash-4.4.1',
+                 'invalid_wildcard' => 'bash-4.4.9*',
+               }
+             else
+               {
+                 'well_formatted' => 'bash',
+                 'trailing_wildcard' => 'bash',
+                 'complex_wildcard' => 'bash',
+                 'release_containing_dots' => 'bash',
+                 'invalid' => 22,
+                 'invalid_wildcard' => 22,
+               }
+             end
     context "on #{os}" do
       let(:facts) { os_facts }
 
