@@ -17,17 +17,14 @@
 define zypprepo::versionlock {
   require zypprepo::plugin::versionlock
 
-  # Versionlock on SLES12 is different
-  case $facts['os']['release']['major'] {
-    '15': {
-      assert_type(Zypprepo::VersionlockString, $name) |$_expected, $actual | {
-        fail("Package name must be formatted as %{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}, not \'${actual}\'. See Zypprepo::Versionlock documentation for details.")
-      }
+  # Versionlock on Sles below 15 is different
+  case versioncmp($facts['os']['release']['major'], '15') >= 0 {
+    assert_type(Zypprepo::VersionlockString, $name) |$_expected, $actual | {
+      fail("Package name must be formatted as %{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}, not \'${actual}\'. See Zypprepo::Versionlock documentation for details.")
     }
-    default: {
-      assert_type(String[1], $name) |$_expected, $actual| {
-        fail("Package must be formatted as %{NAME}, not \'${actual}\'. See Zypprepo::Versionlock documentation for details.")
-      }
+  } else {
+    assert_type(String[1], $name) |$_expected, $actual| {
+      fail("Package must be formatted as %{NAME}, not \'${actual}\'. See Zypprepo::Versionlock documentation for details.")
     }
   }
 
