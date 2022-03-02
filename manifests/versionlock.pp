@@ -18,7 +18,7 @@ define zypprepo::versionlock {
   require zypprepo::plugin::versionlock
 
   # Versionlock on Sles below 15 is different
-  case versioncmp($facts['os']['release']['major'], '15') >= 0 {
+  if versioncmp($facts['os']['release']['major'], '15') >= 0 {
     assert_type(Zypprepo::VersionlockString, $name) |$_expected, $actual | {
       fail("Package name must be formatted as %{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}, not \'${actual}\'. See Zypprepo::Versionlock documentation for details.")
     }
