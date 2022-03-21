@@ -1,0 +1,11 @@
+
+type: package
+<% unless $version =~ Undef { -%>
+version: <%= $version %>
+<% } -%>
+match_type: glob
+case_sensitive: on
+solvable_name: <%= $solvable_name %>
+<% unless $solvable_arch =~ Undef { -%>
+solvable_arch: <%= $solvable_arch %>
+<% } -%>
