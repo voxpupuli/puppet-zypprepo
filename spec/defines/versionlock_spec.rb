@@ -84,7 +84,22 @@ describe 'zypprepo::versionlock' do
         it { is_expected.to raise_error(Puppet::PreformattedError, %r(%\{NAME\}-%\{VERSION\}-%\{RELEASE\}\.%\{ARCH\})) }
       end
 
-      context 'with a simple, well-formed package name title bash and a version' do
+      context 'with a simple, well-formed package name title bash' do
+        context 'with wildcard only version' do
+          let(:title) { 'bash' }
+          let(:params) { { version: '*' } }
+
+          it_behaves_like 'a well-defined versionlock'
+          it 'contains a well-formed Concat::Fragment' do
+            is_expected.to contain_concat__fragment("zypprepo-versionlock-#{title}").with_content(
+              "\ntype: package\n" \
+              "match_type: glob\n" \
+              "case_sensitive: on\n" \
+              "solvable_name: bash\n"
+            )
+          end
+        end
+
         context 'with version set' do
           let(:title) { 'bash' }
           let(:params) { { version: '4.4.1' } }

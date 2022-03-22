@@ -24,6 +24,12 @@
 #     arch    => 'noarch',
 #   }
 #
+# @example Simple usage to set package to any version on hold
+#   zypprepo::versionlock { 'bash':
+#     version => '*',
+#   }
+#
+#
 # @param ensure
 #   Specifies if versionlock should be `present` or `absent`.
 #
@@ -104,10 +110,14 @@ define zypprepo::versionlock (
     }
     $_release = $release ? {
       Undef   => '',
+      '*'     => '',
       default => "-${release}",
     }
     $_solvable_name = $name
-    $_versionlock = "${_epoch}${version}${_release}"
+    $_versionlock = ($_epoch.empty and $version == '*' and $_release.empty) ? {
+      true    => undef,
+      default => "${_epoch}${version}${_release}",
+    }
     $_solvable_arch = $arch
   }
 
