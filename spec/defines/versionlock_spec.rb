@@ -72,6 +72,22 @@ describe 'zypprepo::versionlock' do
         end
       end
 
+      context 'with a release containing dots and epoch' do
+        let(:title) { '0:java-1.7.0-openjdk-1.7.0.121-2.6.8.0.3.x86_64' }
+
+        it_behaves_like 'a well-defined versionlock'
+        it 'contains a well-formed Concat::Fragment' do
+          is_expected.to contain_concat__fragment("zypprepo-versionlock-#{title}").with_content(
+            "\ntype: package\n" \
+            "version: 0:1.7.0.121-2.6.8.0.3\n" \
+            "match_type: glob\n" \
+            "case_sensitive: on\n" \
+            "solvable_name: java-1.7.0-openjdk\n" \
+            "solvable_arch: x86_64\n"
+          )
+        end
+      end
+
       context 'with an invalid title' do
         let(:title) { 'bash-4.4.1' }
 

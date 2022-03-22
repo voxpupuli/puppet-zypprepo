@@ -71,29 +71,34 @@ define zypprepo::versionlock (
   if $version =~ Undef {
     assert_type(Zypprepo::VersionlockString, $name) |$_expected, $actual | {
       # lint:ignore:140chars
-      fail("Package name must be formatted as %{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}, not \'${actual}\'. See Zypprepo::Versionlock documentation for details.")
+      fail("Package name must be formatted as [%{EPOCH}:]%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}, not \'${actual}\'. See Zypprepo::Versionlock documentation for details.")
       # lint:endignore
     }
 
-    # split the string into the needed parts
-    $_version = split($name, /-/)
-    $_release_arch = split($_version[-1], /\./)
-    if ( $_release_arch[-1] =~ Zypprepo::RpmArch or $_release_arch[-1] == '*' ) and join($_release_arch[0,-2],'.') =~ Zypprepo::RpmRelease {
-      $_release = join($_release_arch[0,-2],'.')
-      $_arch = $_release_arch[-1]
+    # split the name string into the needed parts
+    $_matches = $name.match(/^(?:(\d+):)?(.*)-([^-]+)-([^-]+)\.([^.]+)$/)
+    $_epoch = $_matches[1] ? {
+      Undef   => '',
+      default => "${_matches[1]}:",
+    }
+    $_solvable_name = $_matches[2]
+    $_version = $_matches[3]
+    if $_matches[5] =~ Zypprepo::RpmArch or $_matches[5] == '*' {
+      $_release = $_matches[4] ? {
+        '*'     => '',
+        default => "-${_matches[4]}",
+      }
+      $_solvable_arch = $_matches[5] ? {
+        '*'     => undef,
+        default => $_matches[5],
+      }
     } else {
-      $_release = $_version[-1]
-      $_arch = undef
+      $_release = "-${_matches[4]}.${_matches[5]}"
+      $_solvable_arch = undef
     }
-
-    $_solvable_name = join($_version[0,-3],'-')
-    $_versionlock = $_release ? {
-      '*'     => $_version[-2],
-      default => "${_version[-2]}-${_release}"
-    }
-    $_solvable_arch = $_arch ? {
-      '*'     => undef,
-      default => $_arch,
+    $_versionlock = ($_epoch.empty and $_version == '*' and $_release.empty) ? {
+      true    => undef,
+      default => "${_epoch}${_version}${_release}",
     }
   } else {
     assert_type(Zypprepo::RpmName, $name) |$_expected, $actual | {
