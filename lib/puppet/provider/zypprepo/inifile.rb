@@ -19,7 +19,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
     '/etc/zypp/repos.d'.
   EOD
 
-  PROPERTIES = Puppet::Type.type(:zypprepo).validproperties
+  ZYPPREPO_PROPERTIES = Puppet::Type.type(:zypprepo).validproperties
 
   # Retrieve all providers based on existing zypper repositories
   #
@@ -142,7 +142,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   # @param key [String] The property to look up.
   # @return [Boolean] Returns true if the property is defined in the type.
   def self.valid_property?(key)
-    PROPERTIES.include?(key)
+    ZYPPREPO_PROPERTIES.include?(key)
   end
 
   # Return an existing INI section or create a new section in the default location
@@ -212,7 +212,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
     # over them, avoiding ensure.  We're relying on .should to
     # check if the property has been set and should be modified,
     # and if so we set it in the virtual inifile.
-    PROPERTIES.each do |property|
+    ZYPPREPO_PROPERTIES.each do |property|
       next if property == :ensure
 
       value = @resource.should(property)
@@ -251,7 +251,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   end
 
   # Generate setters and getters for our INI properties.
-  PROPERTIES.each do |property|
+  ZYPPREPO_PROPERTIES.each do |property|
     # The ensure property uses #create, #exists, and #destroy we can't generate
     # meaningful setters and getters for this
     next if property == :ensure
