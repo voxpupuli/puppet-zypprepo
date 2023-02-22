@@ -16,7 +16,7 @@ Puppet::Type.newtype(:zypprepo) do
 
   ensurable
   # Doc string for properties that can be made 'absent'
-  ABSENT_DOC = 'Set this to `absent` to remove it from the file completely.'.freeze
+  ZYPPREPO_ABSENT_DOC = 'Set this to `absent` to remove it from the file completely.'.freeze
   ZYPP_BOOLEAN = %r{^(true|false|0|1|no|yes)$}
   ZYPP_BOOLEAN_DOC = 'Valid values are: false/0/no or true/1/yes.'.freeze
 
@@ -24,7 +24,7 @@ Puppet::Type.newtype(:zypprepo) do
     val.to_s == 'absent' ? :absent : val.to_s.capitalize
   end
 
-  VALID_SCHEMES = %w[file http https ftp cd].freeze
+  ZYPPREPO_VALID_SCHEMES = %w[file http https ftp cd].freeze
 
   newparam(:name, namevar: true) do
     desc "The name of the repository.  This corresponds to the
@@ -34,26 +34,26 @@ Puppet::Type.newtype(:zypprepo) do
   newproperty(:descr) do
     desc "A human-readable description of the repository.
       This corresponds to the name parameter in `zypper(8)`.
-      #{ABSENT_DOC}"
+      #{ZYPPREPO_ABSENT_DOC}"
     newvalues(%r{.*}, :absent)
   end
 
   newproperty(:mirrorlist) do
     desc "The URL that holds the list of mirrors for this repository.
-      #{ABSENT_DOC}"
+      #{ZYPPREPO_ABSENT_DOC}"
     newvalues(%r{.*}, :absent)
     validate do |value|
       next if value.to_s == 'absent'
       parsed = URI.parse(value)
 
-      unless VALID_SCHEMES.include?(parsed.scheme)
+      unless ZYPPREPO_VALID_SCHEMES.include?(parsed.scheme)
         raise _('Must be a valid URL')
       end
     end
   end
 
   newproperty(:baseurl) do
-    desc "The URL for this repository. #{ABSENT_DOC}"
+    desc "The URL for this repository. #{ZYPPREPO_ABSENT_DOC}"
     newvalues(%r{.*}, :absent)
     validate do |value|
       next if value.to_s == 'absent'
@@ -61,7 +61,7 @@ Puppet::Type.newtype(:zypprepo) do
       value.split(%r{\s+}).each do |uri|
         parsed = URI.parse(uri)
 
-        unless VALID_SCHEMES.include?(parsed.scheme)
+        unless ZYPPREPO_VALID_SCHEMES.include?(parsed.scheme)
           raise _('Must be a valid URL')
         end
       end
@@ -69,14 +69,14 @@ Puppet::Type.newtype(:zypprepo) do
   end
 
   newproperty(:path) do
-    desc "The path relative to the baseurl. #{ABSENT_DOC}"
+    desc "The path relative to the baseurl. #{ZYPPREPO_ABSENT_DOC}"
     newvalues(%r{.*}, :absent)
   end
 
   newproperty(:enabled) do
     desc "Whether this repository is enabled.
     #{ZYPP_BOOLEAN_DOC}
-    #{ABSENT_DOC}"
+    #{ZYPPREPO_ABSENT_DOC}"
     newvalues(ZYPP_BOOLEAN, :absent)
     munge(&munge_zypp_bool)
   end
@@ -84,7 +84,7 @@ Puppet::Type.newtype(:zypprepo) do
   newproperty(:gpgcheck) do
     desc "Whether to check the GPG signature from this repository
     #{ZYPP_BOOLEAN_DOC}
-    #{ABSENT_DOC}"
+    #{ZYPPREPO_ABSENT_DOC}"
     newvalues(ZYPP_BOOLEAN, :absent)
     munge(&munge_zypp_bool)
   end
@@ -92,7 +92,7 @@ Puppet::Type.newtype(:zypprepo) do
   newproperty(:repo_gpgcheck) do
     desc "Whether to check the GPG signature on the repository metadata
     #{ZYPP_BOOLEAN_DOC}
-    #{ABSENT_DOC}"
+    #{ZYPPREPO_ABSENT_DOC}"
     newvalues(ZYPP_BOOLEAN, :absent)
     munge(&munge_zypp_bool)
   end
@@ -100,14 +100,14 @@ Puppet::Type.newtype(:zypprepo) do
   newproperty(:pkg_gpgcheck) do
     desc "Whether to check the GPG signature on packages installed
     #{ZYPP_BOOLEAN_DOC}
-    #{ABSENT_DOC}"
+    #{ZYPPREPO_ABSENT_DOC}"
     newvalues(ZYPP_BOOLEAN, :absent)
     munge(&munge_zypp_bool)
   end
 
   newproperty(:gpgkey) do
     desc "The URL for the GPG key with which packages from this
-      repository are signed. #{ABSENT_DOC}"
+      repository are signed. #{ZYPPREPO_ABSENT_DOC}"
 
     newvalues(%r{.*}, :absent)
     validate do |value|
@@ -116,7 +116,7 @@ Puppet::Type.newtype(:zypprepo) do
       value.split(%r{\s+}).each do |uri|
         parsed = URI.parse(uri)
 
-        unless VALID_SCHEMES.include?(parsed.scheme)
+        unless ZYPPREPO_VALID_SCHEMES.include?(parsed.scheme)
           raise _('Must be a valid URL')
         end
       end
@@ -127,7 +127,7 @@ Puppet::Type.newtype(:zypprepo) do
     desc "Priority of this repository. Can be any integer value
       (including negative). Requires that the `priorities` plugin
       is installed and enabled.
-      #{ABSENT_DOC}"
+      #{ZYPPREPO_ABSENT_DOC}"
 
     newvalues(%r{^-?\d+$}, :absent)
   end
@@ -135,7 +135,7 @@ Puppet::Type.newtype(:zypprepo) do
   newproperty(:autorefresh) do
     desc "Enable autorefresh of the repository.
     #{ZYPP_BOOLEAN_DOC}
-    #{ABSENT_DOC}"
+    #{ZYPPREPO_ABSENT_DOC}"
     newvalues(ZYPP_BOOLEAN, :absent)
     munge(&munge_zypp_bool)
   end
@@ -143,14 +143,14 @@ Puppet::Type.newtype(:zypprepo) do
   newproperty(:keeppackages) do
     desc "Enable RPM files caching
     #{ZYPP_BOOLEAN_DOC}
-    #{ABSENT_DOC}"
+    #{ZYPPREPO_ABSENT_DOC}"
     newvalues(ZYPP_BOOLEAN, :absent)
     munge(&munge_zypp_bool)
   end
 
   newproperty(:type) do
     desc "The type of software repository. Values can match
-       `yast2` or `rpm-md` or `plaindir` or `yum` or `NONE`. #{ABSENT_DOC}"
+       `yast2` or `rpm-md` or `plaindir` or `yum` or `NONE`. #{ZYPPREPO_ABSENT_DOC}"
     newvalues(%r{yast2|rpm-md|plaindir|yum|NONE}, :absent)
   end
 end
