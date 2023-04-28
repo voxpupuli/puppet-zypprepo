@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PuppetSpec::Compiler
   module_function
 
@@ -14,7 +16,7 @@ module PuppetSpec::Compiler
     ral
   end
 
-  def apply_compiled_manifest(manifest, prioritizer = Puppet::Graph::SequentialPrioritizer.new)
+  def apply_compiled_manifest(manifest, prioritizer = Puppet::Graph::SequentialPrioritizer.new, &block)
     args = []
     if Puppet.version.to_f < 5.0
       args << 'apply'
@@ -23,7 +25,7 @@ module PuppetSpec::Compiler
       # rubocop:enable RSpec/AnyInstance
     end
     catalog = compile_to_ral(manifest)
-    catalog.resources.each { |res| yield res } if block_given?
+    catalog.resources.each(&block) if block_given?
     transaction = Puppet::Transaction.new(catalog,
                                           Puppet::Transaction::Report.new(*args),
                                           prioritizer)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Description of zypper repositories
 require 'puppet/util/inifile'
 
@@ -72,15 +74,11 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
     # Use directories in reposdir if they are set instead of default
     if reposdir
       # Follow the code from the yumrepo provider
-      reposdir.strip!
-      reposdir.tr!("\n", ' ')
-      reposdir.tr!(',', ' ')
-      dirs = reposdir.split
+      reposdir_stripped = reposdir.strip.tr("\n", ' ').tr(',', ' ')
+      dirs = reposdir_stripped.split
     end
     dirs.select! { |dir| Puppet::FileSystem.exist?(dir) }
-    if dirs.empty?
-      Puppet.debug('No zypper directories were found on the local filesystem')
-    end
+    Puppet.debug('No zypper directories were found on the local filesystem') if dirs.empty?
 
     dirs
   end
@@ -174,8 +172,10 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
     target_mode = 0o644
     inifile.each_file do |file|
       next unless Puppet::FileSystem.exist?(file)
+
       current_mode = Puppet::FileSystem.stat(file).mode & 0o777
       next if current_mode == target_mode
+
       resource.info format(_('changing mode of %{file} from %{current_mode} to %{target_mode}'), file: file, current_mode: format('%03o', current_mode), target_mode: format('%03o', target_mode))
       Puppet::FileSystem.chmod(target_mode, file)
     end
@@ -183,15 +183,14 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
 
   def self.repo_path(name)
     dirs = reposdir
-    path = if dirs.empty?
-             # If no repo directories are present, default to using /etc/zypp/repos.d.
-             '/etc/zypp/repos.d'
-           else
-             # The ordering of reposdir is [defaults, custom], and we want to use
-             # the custom directory if present.
-             File.join(dirs.last, "#{name}.repo")
-           end
-    path
+    if dirs.empty?
+      # If no repo directories are present, default to using /etc/zypp/repos.d.
+      '/etc/zypp/repos.d'
+    else
+      # The ordering of reposdir is [defaults, custom], and we want to use
+      # the custom directory if present.
+      File.join(dirs.last, "#{name}.repo")
+    end
   end
 
   # Create a new section for the given repository and set all the specified
@@ -267,9 +266,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
 
   # Map the zypprepo 'descr' type property to the 'name' INI property.
   def descr
-    unless @property_hash.key?(:descr)
-      @property_hash[:descr] = current_section['name']
-    end
+    @property_hash[:descr] = current_section['name'] unless @property_hash.key?(:descr)
     value = @property_hash[:descr]
     value.nil? ? :absent : value
   end
@@ -283,9 +280,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   private
 
   def get_property(property)
-    unless @property_hash.key?(property)
-      @property_hash[property] = current_section[property.to_s]
-    end
+    @property_hash[property] = current_section[property.to_s] unless @property_hash.key?(property)
     value = @property_hash[property]
     value.nil? ? :absent : value
   end

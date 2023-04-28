@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fileutils'
 require 'tempfile'
 require 'tmpdir'
@@ -56,7 +58,7 @@ module PuppetSpec::Files
     target_mode = if Puppet.features.microsoft_windows?
                     mode
                   else
-                    '10' + format('%04i', mode.to_i)
+                    "10#{format('%04i', mode.to_i)}"
                   end
     expect(actual_mode).to eq(target_mode)
   end
