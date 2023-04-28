@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Description of zypper repositories
 require 'uri'
 
@@ -16,9 +18,9 @@ Puppet::Type.newtype(:zypprepo) do
 
   ensurable
   # Doc string for properties that can be made 'absent'
-  ZYPPREPO_ABSENT_DOC = 'Set this to `absent` to remove it from the file completely.'.freeze
-  ZYPP_BOOLEAN = %r{^(true|false|0|1|no|yes)$}
-  ZYPP_BOOLEAN_DOC = 'Valid values are: false/0/no or true/1/yes.'.freeze
+  ZYPPREPO_ABSENT_DOC = 'Set this to `absent` to remove it from the file completely.'
+  ZYPP_BOOLEAN = %r{^(true|false|0|1|no|yes)$}.freeze
+  ZYPP_BOOLEAN_DOC = 'Valid values are: false/0/no or true/1/yes.'
 
   munge_zypp_bool = proc do |val|
     val.to_s == 'absent' ? :absent : val.to_s.capitalize
@@ -44,11 +46,10 @@ Puppet::Type.newtype(:zypprepo) do
     newvalues(%r{.*}, :absent)
     validate do |value|
       next if value.to_s == 'absent'
+
       parsed = URI.parse(value)
 
-      unless ZYPPREPO_VALID_SCHEMES.include?(parsed.scheme)
-        raise _('Must be a valid URL')
-      end
+      raise _('Must be a valid URL') unless ZYPPREPO_VALID_SCHEMES.include?(parsed.scheme)
     end
   end
 
@@ -61,9 +62,7 @@ Puppet::Type.newtype(:zypprepo) do
       value.split(%r{\s+}).each do |uri|
         parsed = URI.parse(uri)
 
-        unless ZYPPREPO_VALID_SCHEMES.include?(parsed.scheme)
-          raise _('Must be a valid URL')
-        end
+        raise _('Must be a valid URL') unless ZYPPREPO_VALID_SCHEMES.include?(parsed.scheme)
       end
     end
   end
@@ -116,9 +115,7 @@ Puppet::Type.newtype(:zypprepo) do
       value.split(%r{\s+}).each do |uri|
         parsed = URI.parse(uri)
 
-        unless ZYPPREPO_VALID_SCHEMES.include?(parsed.scheme)
-          raise _('Must be a valid URL')
-        end
+        raise _('Must be a valid URL') unless ZYPPREPO_VALID_SCHEMES.include?(parsed.scheme)
       end
     end
   end

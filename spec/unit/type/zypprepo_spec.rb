@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'puppet'
 
@@ -5,6 +7,7 @@ shared_examples_for 'a zypprepo parameter that can be absent' do |param|
   it 'can be set as :absent' do
     described_class.new(:name => 'puppetlabs', param => :absent)
   end
+
   it 'can be set as "absent"' do
     described_class.new(:name => 'puppetlabs', param => 'absent')
   end
@@ -15,10 +18,12 @@ shared_examples_for 'a zypprepo parameter that can be an integer' do |param|
     instance = described_class.new(:name => 'puppetlabs', param => '12')
     expect(instance[param]).to eq '12'
   end
+
   it 'accepts zero' do
     instance = described_class.new(:name => 'puppetlabs', param => '0')
     expect(instance[param]).to eq '0'
   end
+
   it 'rejects invalid positive float' do
     expect do
       described_class.new(
@@ -27,6 +32,7 @@ shared_examples_for 'a zypprepo parameter that can be an integer' do |param|
       )
     end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
+
   it 'rejects invalid non-integer' do
     expect do
       described_class.new(
@@ -35,6 +41,7 @@ shared_examples_for 'a zypprepo parameter that can be an integer' do |param|
       )
     end.to raise_error(Puppet::ResourceError, %r{Parameter #{param} failed})
   end
+
   it 'rejects invalid string with integers inside' do
     expect do
       described_class.new(
@@ -64,6 +71,7 @@ shared_examples_for 'a zypprepo parameter that expects a boolean parameter' do |
       instance = described_class.new(:name => 'puppetlabs', param => value.downcase)
       expect(instance[param]).to eq value.downcase.capitalize
     end
+
     it "fails on valid value #{value} contained in another value" do
       expect do
         described_class.new(

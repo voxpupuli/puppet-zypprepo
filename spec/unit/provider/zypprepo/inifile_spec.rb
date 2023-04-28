@@ -1,9 +1,11 @@
-dir = File.expand_path(File.dirname(__FILE__))
+# frozen_string_literal: true
+
+dir = __dir__
 $LOAD_PATH.unshift File.join(dir, '../../../lib')
 
 # So everyone else doesn't have to include this base constant.
 module PuppetSpec
-  FIXTURE_DIR = File.join(File.expand_path(File.dirname(__FILE__)), '../../../fixtures') unless defined?(FIXTURE_DIR)
+  FIXTURE_DIR = File.join(__dir__, '../../../fixtures') unless defined?(FIXTURE_DIR)
 end
 
 require 'spec_helper'
@@ -39,6 +41,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
       described_class.clear
       expect(Puppet::Util::IniConfig::FileCollection).to receive(:new).and_return collection # rubocop:disable RSpec/ExpectInHook
     end
+
     it 'reads all files in the directories specified by self.repofiles' do
       expect(described_class).to receive(:repofiles).and_return(files)
 
@@ -56,7 +59,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
       allow(Puppet::FileSystem).to receive(:file?).with('/etc/zypp/repos.d/second.repo').and_return false
 
       expect(collection).to receive(:read).with('/etc/zypp/repos.d/first.repo').once
-      expect(collection).to receive(:read).with('/etc/zypp/repos.d/second.repo').never
+      expect(collection).not_to receive(:read).with('/etc/zypp/repos.d/second.repo')
       described_class.virtual_inifile
     end
   end
@@ -66,7 +69,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
 
     let(:main_section) do
       sect = Puppet::Util::IniConfig::Section.new('main', '/some/imaginary/file')
-      sect.entries << ['distroverpkg', 'sles-release']
+      sect.entries << %w[distroverpkg sles-release]
       sect.entries << %w[plugins 1]
 
       sect
@@ -121,7 +124,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
       end
 
       it "doesn't create a new section" do
-        expect(collection).to receive(:add_section).never
+        expect(collection).not_to receive(:add_section)
         described_class.section('updates')
       end
     end
@@ -336,56 +339,56 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
       # we specifically want to create a file after prefetch has happened so that
       # none of the sections in the file exist in the prefetch cache
       repo_file = File.join(zypprepo_dir, 'puppetlabs-products.repo')
-      contents = <<-HEREDOC
-[puppetlabs-products]
-name=created_by_package_after_prefetch
-enabled=1
-failovermethod=priority
-gpgcheck=0
+      contents = <<~HEREDOC
+        [puppetlabs-products]
+        name=created_by_package_after_prefetch
+        enabled=1
+        failovermethod=priority
+        gpgcheck=0
 
-[additional_section]
-name=Extra Packages for SuSE Enterprise Linux 12 - $basearch - Debug
-#baseurl=http://download.suse.com/pub/sles/12/$basearch/debug
-mirrorlist=https://mirrors.suse.com/metalink?repo=sles-debug-12&arch=$basearch
-failovermethod=priority
-enabled=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
-gpgcheck=1
+        [additional_section]
+        name=Extra Packages for SuSE Enterprise Linux 12 - $basearch - Debug
+        #baseurl=http://download.suse.com/pub/sles/12/$basearch/debug
+        mirrorlist=https://mirrors.suse.com/metalink?repo=sles-debug-12&arch=$basearch
+        failovermethod=priority
+        enabled=0
+        gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+        gpgcheck=1
       HEREDOC
       File.open(repo_file, 'wb') { |f| f.write(contents) }
 
       provider.create
       provider.flush
 
-      expected_contents = <<-HEREDOC
-[puppetlabs-products]
-name=Puppet Labs Products SLES 12 - $basearch
-enabled=1
-failovermethod=priority
-gpgcheck=1
+      expected_contents = <<~HEREDOC
+        [puppetlabs-products]
+        name=Puppet Labs Products SLES 12 - $basearch
+        enabled=1
+        failovermethod=priority
+        gpgcheck=1
 
-baseurl=http://yum.puppetlabs.com/sles/12/products/$basearch
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs
-[additional_section]
-name=Extra Packages for SuSE Enterprise Linux 12 - $basearch - Debug
-#baseurl=http://download.suse.com/pub/sles/12/$basearch/debug
-mirrorlist=https://mirrors.suse.com/metalink?repo=sles-debug-12&arch=$basearch
-failovermethod=priority
-enabled=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
-gpgcheck=1
+        baseurl=http://yum.puppetlabs.com/sles/12/products/$basearch
+        gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs
+        [additional_section]
+        name=Extra Packages for SuSE Enterprise Linux 12 - $basearch - Debug
+        #baseurl=http://download.suse.com/pub/sles/12/$basearch/debug
+        mirrorlist=https://mirrors.suse.com/metalink?repo=sles-debug-12&arch=$basearch
+        failovermethod=priority
+        enabled=0
+        gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+        gpgcheck=1
       HEREDOC
       expect(File.read(repo_file)).to eq(expected_contents)
     end
 
     it 'does not error becuase of repo files that have been removed from disk' do
       repo_file = File.join(zypprepo_dir, 'sles.repo')
-      contents = <<-HEREDOC
-[epel]
-name=created_by_package_after_prefetch
-enabled=1
-failovermethod=priority
-gpgcheck=0
+      contents = <<~HEREDOC
+        [epel]
+        name=created_by_package_after_prefetch
+        enabled=1
+        failovermethod=priority
+        gpgcheck=0
       HEREDOC
       File.open(repo_file, 'wb') { |f| f.write(contents) }
       provider.class.prefetch({})
