@@ -74,10 +74,8 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
     # Use directories in reposdir if they are set instead of default
     if reposdir
       # Follow the code from the yumrepo provider
-      reposdir.strip!
-      reposdir.tr!("\n", ' ')
-      reposdir.tr!(',', ' ')
-      dirs = reposdir.split
+      reposdir_stripped = reposdir.strip.tr("\n", ' ').tr(',', ' ')
+      dirs = reposdir_stripped.split
     end
     dirs.select! { |dir| Puppet::FileSystem.exist?(dir) }
     Puppet.debug('No zypper directories were found on the local filesystem') if dirs.empty?
