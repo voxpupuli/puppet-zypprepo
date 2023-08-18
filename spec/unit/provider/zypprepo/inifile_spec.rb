@@ -355,7 +355,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
         gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
         gpgcheck=1
       HEREDOC
-      File.open(repo_file, 'wb') { |f| f.write(contents) }
+      File.binwrite(repo_file, contents)
 
       provider.create
       provider.flush
@@ -390,7 +390,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
         failovermethod=priority
         gpgcheck=0
       HEREDOC
-      File.open(repo_file, 'wb') { |f| f.write(contents) }
+      File.binwrite(repo_file, contents)
       provider.class.prefetch({})
       File.delete(repo_file)
 
