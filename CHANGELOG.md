@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.0.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v5.0.0) (2023-08-21)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v4.0.1...v5.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 6 support [\#73](https://github.com/voxpupuli/puppet-zypprepo/pull/73) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- allow puppetlabs/concat 9.x [\#79](https://github.com/voxpupuli/puppet-zypprepo/pull/79) ([jhoblitt](https://github.com/jhoblitt))
+- Add Puppet 8 support [\#76](https://github.com/voxpupuli/puppet-zypprepo/pull/76) ([bastelfreak](https://github.com/bastelfreak))
+- puppetlabs/stdlib: Allow 9.x [\#75](https://github.com/voxpupuli/puppet-zypprepo/pull/75) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- Prevent warning about already initialized constant [\#72](https://github.com/voxpupuli/puppet-zypprepo/pull/72) ([tuxmea](https://github.com/tuxmea))
+
+**Closed issues:**
+
+- Warning about "already initialized constant" [\#71](https://github.com/voxpupuli/puppet-zypprepo/issues/71)
+
 ## [v4.0.1](https://github.com/voxpupuli/puppet-zypprepo/tree/v4.0.1) (2021-08-26)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v4.0.0...v4.0.1)
