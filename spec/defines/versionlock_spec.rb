@@ -19,9 +19,11 @@ describe 'zypprepo::versionlock' do
         it 'contains a well-formed Concat::Fragment' do
           is_expected.to contain_concat__fragment("zypprepo-versionlock-#{title}").with_content(
             "\ntype: package\n" \
+            "version: 4.4-9.10.1\n" \
             "match_type: glob\n" \
             "case_sensitive: on\n" \
-            "solvable_name: #{title}\n"
+            "solvable_name: bash\n" \
+            "solvable_arch: x86_64\n"
           )
         end
       end
@@ -33,9 +35,10 @@ describe 'zypprepo::versionlock' do
         it 'contains a well-formed Concat::Fragment' do
           is_expected.to contain_concat__fragment("zypprepo-versionlock-#{title}").with_content(
             "\ntype: package\n" \
+            "version: 4.4-9.10.1\n" \
             "match_type: glob\n" \
             "case_sensitive: on\n" \
-            "solvable_name: #{title}\n"
+            "solvable_name: bash\n"
           )
         end
       end
@@ -47,9 +50,10 @@ describe 'zypprepo::versionlock' do
         it 'contains a well-formed Concat::Fragment' do
           is_expected.to contain_concat__fragment("zypprepo-versionlock-#{title}").with_content(
             "\ntype: package\n" \
+            "version: 4.*-*.1\n" \
             "match_type: glob\n" \
             "case_sensitive: on\n" \
-            "solvable_name: #{title}\n"
+            "solvable_name: bash\n"
           )
         end
       end
@@ -61,9 +65,27 @@ describe 'zypprepo::versionlock' do
         it 'contains a well-formed Concat::Fragment' do
           is_expected.to contain_concat__fragment("zypprepo-versionlock-#{title}").with_content(
             "\ntype: package\n" \
+            "version: 1.7.0.121-2.6.8.0.3\n" \
             "match_type: glob\n" \
             "case_sensitive: on\n" \
-            "solvable_name: #{title}\n"
+            "solvable_name: java-1.7.0-openjdk\n" \
+            "solvable_arch: x86_64\n"
+          )
+        end
+      end
+
+      context 'with a release containing dots and epoch' do
+        let(:title) { '0:java-1.7.0-openjdk-1.7.0.121-2.6.8.0.3.x86_64' }
+
+        it_behaves_like 'a well-defined versionlock'
+        it 'contains a well-formed Concat::Fragment' do
+          is_expected.to contain_concat__fragment("zypprepo-versionlock-#{title}").with_content(
+            "\ntype: package\n" \
+            "version: 0:1.7.0.121-2.6.8.0.3\n" \
+            "match_type: glob\n" \
+            "case_sensitive: on\n" \
+            "solvable_name: java-1.7.0-openjdk\n" \
+            "solvable_arch: x86_64\n"
           )
         end
       end
@@ -78,6 +100,63 @@ describe 'zypprepo::versionlock' do
         let(:title) { 'bash-4.4.9*' }
 
         it { is_expected.to raise_error(Puppet::PreformattedError, %r(%\{NAME\}-%\{VERSION\}-%\{RELEASE\}\.%\{ARCH\})) }
+      end
+
+      context 'with a simple, well-formed package name title bash' do
+        context 'with wildcard only version' do
+          let(:title) { 'bash' }
+          let(:params) { { version: '*' } }
+
+          it_behaves_like 'a well-defined versionlock'
+          it 'contains a well-formed Concat::Fragment' do
+            is_expected.to contain_concat__fragment("zypprepo-versionlock-#{title}").with_content(
+              "\ntype: package\n" \
+              "match_type: glob\n" \
+              "case_sensitive: on\n" \
+              "solvable_name: bash\n"
+            )
+          end
+        end
+
+        context 'with version set' do
+          let(:title) { 'bash' }
+          let(:params) { { version: '4.4.1' } }
+
+          it_behaves_like 'a well-defined versionlock'
+          it 'contains a well-formed Concat::Fragment' do
+            is_expected.to contain_concat__fragment("zypprepo-versionlock-#{title}").with_content(
+              "\ntype: package\n" \
+              "version: 4.4.1\n" \
+              "match_type: glob\n" \
+              "case_sensitive: on\n" \
+              "solvable_name: bash\n"
+            )
+          end
+        end
+
+        context 'with version, release, epoch and arch set' do
+          let(:title) { 'java-1.7.0-openjdk' }
+          let(:params) do
+            {
+              version: '1.7.0.121',
+              release: '2.6.8.0.3',
+              arch: 'x86_64',
+              epoch: 2
+            }
+          end
+
+          it_behaves_like 'a well-defined versionlock'
+          it 'contains a well-formed Concat::Fragment' do
+            is_expected.to contain_concat__fragment("zypprepo-versionlock-#{title}").with_content(
+              "\ntype: package\n" \
+              "version: 2:1.7.0.121-2.6.8.0.3\n" \
+              "match_type: glob\n" \
+              "case_sensitive: on\n" \
+              "solvable_name: java-1.7.0-openjdk\n" \
+              "solvable_arch: x86_64\n"
+            )
+          end
+        end
       end
     end
   end
