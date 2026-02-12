@@ -31,11 +31,19 @@ zypprepo { 'openSUSE_12.1':
 }
 ```
 
+This Puppet 'type' is a port of the 'yumrepo' type from 2.7 code base
+and is licensed under the Apache-2.0.
+
+
 ### Lock a package with the *versionlock* plugin
 
-Locks explicitly specified packages from updates. Package name must be precisely specified in format *`NAME-VERSION-RELEASE.ARCH`*. Wild card in package name is allowed provided it does not span a field seperator.
+The `versionlock` type has changed and will now use the `version` and `solvable_arch` keys to lock a package version.
 
 **PLEASE NOTE: Once you define a lock in code, all locks must be defined in code.**
+
+#### Lock via title
+
+Locks explicitly specified packages from updates. Package name must be precisely specified in format *`NAME-VERSION-RELEASE.ARCH`*. Wild card in package name is allowed provided it does not span a field seperator.
 
 ```puppet
 zypprepo::versionlock { 'bash-4.1.2-9.sles12.*': }
@@ -48,5 +56,17 @@ PACKAGE_NAME='bash'
 rpm -q "$PACKAGE_NAME" --qf '%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n'
 ```
 
-This Puppet 'type' is a port of the 'yumrepo' type from 2.7 code base
-and is licensed under the Apache-2.0.
+#### Lock with version parameters
+
+```puppet
+zypprepo::versionlock { 'bash':
+  version => '4.1.2',
+  release => '9.sles12',
+  arch    => 'x86_64',
+  epoch   => 0,
+}
+```
+
+The wild card chars '\*' and '?' are also supported for all parameters.
+
+This Puppet 'define' is a port of the 'voxpupuli/puppet-yum' in version 5.3.1.
