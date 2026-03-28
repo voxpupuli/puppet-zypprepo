@@ -12,7 +12,7 @@ describe 'zypprepo::plugin::versionlock' do
           is_expected.to contain_concat('/etc/zypp/locks').with(
             mode: '0644',
             owner: 'root',
-            group: 'root'
+            group: 'root',
           )
         }
 
@@ -20,7 +20,7 @@ describe 'zypprepo::plugin::versionlock' do
           is_expected.to contain_concat__fragment('versionlock_header').with(
             target: '/etc/zypp/locks',
             content: '# File managed by puppet\n',
-            order: '01'
+            order: '01',
           )
         }
       end
@@ -32,7 +32,7 @@ describe 'zypprepo::plugin::versionlock' do
           is_expected.to contain_concat('/test/path').with(
             mode: '0644',
             owner: 'root',
-            group: 'root'
+            group: 'root',
           )
         }
 
@@ -40,7 +40,7 @@ describe 'zypprepo::plugin::versionlock' do
           is_expected.to contain_concat__fragment('versionlock_header').with(
             target: '/test/path',
             content: '# File managed by puppet\n',
-            order: '01'
+            order: '01',
           )
         }
       end

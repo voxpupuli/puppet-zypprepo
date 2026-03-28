@@ -272,7 +272,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   end
 
   def descr=(value)
-    value = (value == :absent ? nil : value)
+    value = ((value == :absent) ? nil : value)
     current_section['name'] = value
     @property_hash[:descr] = value
   end
@@ -286,7 +286,7 @@ Puppet::Type.type(:zypprepo).provide(:inifile) do
   end
 
   def set_property(property, value)
-    value = (value == :absent ? nil : value)
+    value = ((value == :absent) ? nil : value)
     current_section[property.to_s] = value
     @property_hash[property] = value
   end

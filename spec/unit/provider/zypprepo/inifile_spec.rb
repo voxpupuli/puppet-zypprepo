@@ -149,7 +149,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
         descr: 'Puppet Labs Products SLES 12 - $basearch',
         enabled: '1',
         gpgcheck: '1',
-        gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
+        gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs',
       )
     end
 
@@ -318,7 +318,7 @@ describe Puppet::Type.type(:zypprepo).provider(:inifile) do
         descr: 'Puppet Labs Products SLES 12 - $basearch',
         enabled: '1',
         gpgcheck: '1',
-        gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
+        gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs',
       )
     end
 
