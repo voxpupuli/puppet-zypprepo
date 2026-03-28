@@ -23,7 +23,7 @@ Puppet::Type.newtype(:zypprepo) do
   ZYPP_BOOLEAN_DOC = 'Valid values are: false/0/no or true/1/yes.'
 
   munge_zypp_bool = proc do |val|
-    val.to_s == 'absent' ? :absent : val.to_s.capitalize
+    (val.to_s == 'absent') ? :absent : val.to_s.capitalize
   end
 
   ZYPPREPO_VALID_SCHEMES = %w[file http https ftp cd].freeze

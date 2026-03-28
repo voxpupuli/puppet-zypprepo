@@ -21,7 +21,7 @@ describe 'zypprepo::versionlock' do
             "\ntype: package\n" \
             "match_type: glob\n" \
             "case_sensitive: on\n" \
-            "solvable_name: #{title}\n"
+            "solvable_name: #{title}\n",
           )
         end
       end
@@ -35,7 +35,7 @@ describe 'zypprepo::versionlock' do
             "\ntype: package\n" \
             "match_type: glob\n" \
             "case_sensitive: on\n" \
-            "solvable_name: #{title}\n"
+            "solvable_name: #{title}\n",
           )
         end
       end
@@ -49,7 +49,7 @@ describe 'zypprepo::versionlock' do
             "\ntype: package\n" \
             "match_type: glob\n" \
             "case_sensitive: on\n" \
-            "solvable_name: #{title}\n"
+            "solvable_name: #{title}\n",
           )
         end
       end
@@ -63,7 +63,7 @@ describe 'zypprepo::versionlock' do
             "\ntype: package\n" \
             "match_type: glob\n" \
             "case_sensitive: on\n" \
-            "solvable_name: #{title}\n"
+            "solvable_name: #{title}\n",
           )
         end
       end
