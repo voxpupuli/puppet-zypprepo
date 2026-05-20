@@ -4,7 +4,20 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v5.0.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v5.0.0) (2023-08-21)
+## [v6.0.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v6.0.0) (2026-05-20)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v5.0.0...v6.0.0)
+
+**Breaking changes:**
+
+- Drop puppet, update openvox minimum version to 8.19 [\#95](https://github.com/voxpupuli/puppet-zypprepo/pull/95) ([TheMeier](https://github.com/TheMeier))
+
+**Implemented enhancements:**
+
+- puppetlabs/concat: Allow 10.x [\#104](https://github.com/voxpupuli/puppet-zypprepo/pull/104) ([bastelfreak](https://github.com/bastelfreak))
+- metadata.json: Add OpenVox [\#91](https://github.com/voxpupuli/puppet-zypprepo/pull/91) ([jstraw](https://github.com/jstraw))
+
+## [v5.0.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v5.0.0) (2023-08-22)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v4.0.1...v5.0.0)
 
