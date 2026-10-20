@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.1.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v6.1.0) (2026-10-20)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v6.0.0...v6.1.0)
+
+**Implemented enhancements:**
+
+- puppetlabs/stdlib: Allow 10.x [\#108](https://github.com/voxpupuli/puppet-zypprepo/pull/108) ([bastelfreak](https://github.com/bastelfreak))
+- Update requirements to allow OpenVox 9 [\#107](https://github.com/voxpupuli/puppet-zypprepo/pull/107) ([sebastianrakel](https://github.com/sebastianrakel))
+
 ## [v6.0.0](https://github.com/voxpupuli/puppet-zypprepo/tree/v6.0.0) (2026-05-20)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-zypprepo/compare/v5.0.0...v6.0.0)
@@ -128,7 +137,7 @@ These should not affect the functionality of the module.
 
 **Implemented enhancements:**
 
-- NONE is a valid value for Zypp repositories [\#24](https://github.com/voxpupuli/puppet-zypprepo/pull/24) ([laserguy2020](https://github.com/laserguy2020))
+- NONE is a valid value for Zypp repositories [\#24](https://github.com/voxpupuli/puppet-zypprepo/pull/24) ([lasergirl-ca](https://github.com/lasergirl-ca))
 
 **Closed issues:**
 
